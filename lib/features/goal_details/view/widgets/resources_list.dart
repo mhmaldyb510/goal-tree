@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:goal_tree/core/theme/app_text_styles.dart';
+import 'package:goal_tree/features/goal_details/model/resource_model.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class ResourcesList extends StatelessWidget {
+  final List<ResourceModel> resources;
+  const ResourcesList({super.key, required this.resources});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: resources.length,
+      itemBuilder: (context, index) => ListTile(
+        onTap: () {
+          launchUrl(Uri.parse(resources[index].link));
+        },
+        leading: Container(decoration: BoxDecoration(
+          color: Color(0xfff1f2f4),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: EdgeInsets.all(11),
+          child: SvgPicture.asset('assets/icons/link_icon.svg',)),
+        title: Text(resources[index].name,style: AppTextStyles.secondaryTextStyle ),
+
+      ),
+    );
+  }
+}

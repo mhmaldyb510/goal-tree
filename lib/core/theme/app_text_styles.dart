@@ -15,4 +15,15 @@ class AppTextStyles {
     fontSize: 22,
     fontWeight: FontWeight.bold,
   );
+
+  static final primaryTextStyle = TextStyle(
+    fontFamily: GoogleFonts.inter().fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final secondaryTextStyle = TextStyle(
+    fontFamily: GoogleFonts.inter().fontFamily,
+    fontSize: 14,
+  );
 }

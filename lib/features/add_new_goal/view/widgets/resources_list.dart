@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ResourcesList extends StatefulWidget {
-  const ResourcesList({super.key});
+  const ResourcesList({super.key, });
 
   @override
   State<ResourcesList> createState() => _ResourcesListState();

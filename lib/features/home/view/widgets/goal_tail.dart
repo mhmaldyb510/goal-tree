@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tree/core/models/goal_model.dart';
+import 'package:goal_tree/features/goal_details/view/screens/goal_details_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GoalTile extends StatelessWidget {
@@ -9,7 +10,12 @@ class GoalTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const GoalDetailsScreen()),
+        );
+      },
       contentPadding: EdgeInsets.symmetric(horizontal: 16),
       leading: Container(
         height: 48,
