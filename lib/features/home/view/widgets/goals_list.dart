@@ -17,7 +17,28 @@ class GoalsList extends StatelessWidget {
 }
 
 List<GoalModel> goals = [
-  GoalModel(title: 'Goal 1', progress: 20),
-  GoalModel(title: 'Goal 2', progress: 30),
-  GoalModel(title: 'Goal 3', progress: 60),
+  GoalModel(
+    goalId: '1',
+    title: 'Goal 1',
+    progress: 20,
+    description: '',
+    notes: '',
+    priority: GoalPriorityEnum.low,
+  ),
+  GoalModel(
+    goalId: '2',
+    title: 'Goal 2',
+    progress: 30,
+    description: '',
+    notes: '',
+    priority: GoalPriorityEnum.medium,
+  ),
+  GoalModel(
+    goalId: '3',
+    title: 'Goal 3',
+    progress: 60,
+    description: '',
+    notes: '',
+    priority: GoalPriorityEnum.high,
+  ),
 ];

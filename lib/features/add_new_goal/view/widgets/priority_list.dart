@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goal_tree/features/add_new_goal/model/goal_priority_enum.dart';
+import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/priority_box.dart';
 
 class PriorityList extends StatefulWidget {

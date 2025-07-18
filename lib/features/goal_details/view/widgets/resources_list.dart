@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
-import 'package:goal_tree/features/goal_details/model/resource_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResourcesList extends StatelessWidget {

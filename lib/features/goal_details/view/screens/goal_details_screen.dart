@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:goal_tree/core/app_constants.dart';
+import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
 import 'package:goal_tree/features/goal_details/model/info_model.dart';
-import 'package:goal_tree/features/goal_details/model/resource_model.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/goal_details_app_bar.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/info_table.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/resources_list.dart';
