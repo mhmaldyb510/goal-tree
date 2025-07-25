@@ -1,54 +1,32 @@
-import 'package:isar/isar.dart';
+import 'package:goal_tree/core/models/node_model.dart';
+import 'package:goal_tree/core/models/resource_model.dart';
+import 'package:objectbox/objectbox.dart';
 
-part 'goal_model.g.dart';
-
-@collection
+@Entity()
 class GoalModel {
-  Id id = Isar.autoIncrement;
-  final String goalId;
-  final String title;
-  final String description;
-  final double progress;
-  final DateTime? deadline;
-  final String notes;
-  final List<ResourceModel> resources;
-  @enumerated
-  final GoalPriorityEnum priority;
-  final List<NodeModel> nodes;
+  @Id()
+  int id = 0;
+
+  String goalId;
+  String title;
+  String description;
+  double progress;
+  @Property(type: PropertyType.date)
+  DateTime? deadline;
+  String notes;
+  // Use integer for enum storage or converter later
+  int priority;
+
+  final resources = ToMany<ResourceModel>();
+  final nodes = ToMany<NodeModel>();
+
   GoalModel({
     this.goalId = '',
-    this.nodes = const [],
-    this.resources = const [],
     this.title = '',
     this.description = '',
     this.progress = 0.0,
     this.deadline,
     this.notes = '',
-    this.priority = GoalPriorityEnum.low,
+    this.priority = 0,
   });
 }
-
-@embedded
-class NodeModel {
-  String id;
-  String name;
-  bool isDone;
-  List<NodeModel> children;
-
-  NodeModel({
-    this.id = '',
-    this.name = '',
-    this.isDone = false,
-    this.children = const [],
-  });
-}
-
-@embedded
-class ResourceModel {
-  String name;
-  String link;
-
-  ResourceModel({this.name = '', this.link = ''});
-}
-
-enum GoalPriorityEnum { low, medium, high }

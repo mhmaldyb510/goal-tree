@@ -1,0 +1,140 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:5093180647650046119",
+      "lastPropertyId": "8:2177050151561794612",
+      "name": "GoalModel",
+      "properties": [
+        {
+          "id": "1:8069320622820961822",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6830341031295841537",
+          "name": "goalId",
+          "type": 9
+        },
+        {
+          "id": "3:3089020214409824720",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:9159793378990127557",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:4308777772146820496",
+          "name": "progress",
+          "type": 8
+        },
+        {
+          "id": "6:416086853064638856",
+          "name": "deadline",
+          "type": 10
+        },
+        {
+          "id": "7:6183174910837128640",
+          "name": "notes",
+          "type": 9
+        },
+        {
+          "id": "8:2177050151561794612",
+          "name": "priority",
+          "type": 6
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:2190179487637477566",
+          "name": "resources",
+          "targetId": "3:4444198091394292329"
+        },
+        {
+          "id": "2:7603592947972533882",
+          "name": "nodes",
+          "targetId": "2:5082454611034125224"
+        }
+      ]
+    },
+    {
+      "id": "2:5082454611034125224",
+      "lastPropertyId": "4:8759639307600957228",
+      "name": "NodeModel",
+      "properties": [
+        {
+          "id": "1:1941339341058951116",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7552334543662649593",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:2621560950957790327",
+          "name": "isDone",
+          "type": 1
+        },
+        {
+          "id": "4:8759639307600957228",
+          "name": "parentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:5030721023964562914",
+          "relationTarget": "NodeModel"
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:1049634696482291799",
+          "name": "children",
+          "targetId": "2:5082454611034125224"
+        }
+      ]
+    },
+    {
+      "id": "3:4444198091394292329",
+      "lastPropertyId": "3:4237224829998505364",
+      "name": "ResourceModel",
+      "properties": [
+        {
+          "id": "1:3167336564158359303",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1535708313946407139",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4237224829998505364",
+          "name": "link",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:4444198091394292329",
+  "lastIndexId": "1:5030721023964562914",
+  "lastRelationId": "3:1049634696482291799",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

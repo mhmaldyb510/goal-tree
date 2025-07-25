@@ -1,12 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:goal_tree/core/helpers/open_the_database.dart';
+import 'package:goal_tree/core/helpers/object_box.dart';
 import 'package:goal_tree/features/home/view/screens/home_screen.dart';
+
+
+
+late final ObjectBox objectBox;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await openIsarDatabase();
+  objectBox = await ObjectBox.create();
 
   runApp(
     EasyLocalization(

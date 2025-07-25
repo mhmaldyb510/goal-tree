@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tree/core/models/goal_model.dart';
+import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:goal_tree/features/home/view/widgets/goal_tail.dart';
 
 class GoalsList extends StatelessWidget {
-  const GoalsList({super.key});
+  final List<GoalModel> goals;
+  const GoalsList({super.key, required this.goals});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ List<GoalModel> goals = [
     progress: 20,
     description: '',
     notes: '',
-    priority: GoalPriorityEnum.low,
+    priority: GoalPriorityEnum.low.index,
   ),
   GoalModel(
     goalId: '2',
@@ -31,7 +33,7 @@ List<GoalModel> goals = [
     progress: 30,
     description: '',
     notes: '',
-    priority: GoalPriorityEnum.medium,
+    priority: GoalPriorityEnum.medium.index,
   ),
   GoalModel(
     goalId: '3',
@@ -39,6 +41,6 @@ List<GoalModel> goals = [
     progress: 60,
     description: '',
     notes: '',
-    priority: GoalPriorityEnum.high,
+    priority: GoalPriorityEnum.high.index,
   ),
 ];

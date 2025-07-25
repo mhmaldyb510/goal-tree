@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:goal_tree/core/models/goal_model.dart';
+import 'package:goal_tree/core/models/goal_priority_enum.dart';
+import 'package:goal_tree/core/models/resource_model.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/add_new_goal_custom_text_form_field.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/add_resource_button.dart';

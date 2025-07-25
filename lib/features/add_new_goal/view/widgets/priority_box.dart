@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:goal_tree/core/helpers/capitalize_string.dart';
-import 'package:goal_tree/core/models/goal_model.dart';
+import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PriorityBox extends StatelessWidget {
