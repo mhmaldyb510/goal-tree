@@ -23,17 +23,20 @@ class AddNewGoalForm extends StatefulWidget {
 
 class _AddNewGoalFormState extends State<AddNewGoalForm> {
   final _formKey = GlobalKey<FormState>();
-  String goalTitle = '';
-  String goalDescription = '';
+  TextEditingController goalTitle = TextEditingController();
+  TextEditingController goalDescription = TextEditingController();
   TextEditingController goalDeadlineController = TextEditingController();
   DateTime? goalDeadline;
   GoalPriorityEnum goalPriority = GoalPriorityEnum.medium;
-  String? goalNotes;
+  TextEditingController goalNotes = TextEditingController();
   bool addingResource = false;
 
   @override
   void dispose() {
     goalDeadlineController.dispose();
+    goalTitle.dispose();
+    goalDescription.dispose();
+    goalNotes.dispose();
     super.dispose();
   }
 
@@ -49,17 +52,13 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AddNewGoalCustomTextFormField(
-                  onChanged: (value) {
-                    goalTitle = value;
-                  },
+                  controller: goalTitle,
                   hintText: 'Goal Title',
                   validator: Validators.titleValidation,
                 ),
                 SizedBox(height: 24),
                 AddNewGoalCustomTextFormField(
-                  onChanged: (value) {
-                    goalDescription = value;
-                  },
+                  controller: goalDescription,
                   hintText: 'Goal Description',
                   maxLines: 5,
                 ),
@@ -96,9 +95,9 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                 ),
                 SizedBox(height: 24),
                 AddNewGoalCustomTextFormField(
+                  controller: goalNotes,
                   hintText: 'Notes',
                   maxLines: 5,
-                  onChanged: (value) => goalNotes = value,
                 ),
                 SizedBox(height: 24),
                 Text('Resources', style: AppTextStyles.headText).tr(),
@@ -126,10 +125,10 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                 SizedBox(height: 24),
                 CreateNewGoalButton(
                   formKey: _formKey,
-                  goalTitle: goalTitle,
-                  goalDescription: goalDescription,
+                  goalTitle: goalTitle.text,
+                  goalDescription: goalDescription.text,
                   goalPriority: goalPriority,
-                  goalNotes: goalNotes,
+                  goalNotes: goalNotes.text,
                   goalResources: goalResourcesProvider.goalResources,
                   goalDeadline: goalDeadline,
                 ),

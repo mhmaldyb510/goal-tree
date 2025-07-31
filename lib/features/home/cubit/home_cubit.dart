@@ -14,16 +14,13 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getGoals() async {
     emit(HomeLoading());
     _goals = await _goalsStorageHelper.getGoals();
-    emit(HomeLoaded(
-      goals: _goals,
-    ));
+    emit(HomeLoaded(goals: _goals));
   }
 
   Future<void> addGoal(GoalModel goal) async {
-    await _goalsStorageHelper.addGoal(goal);
-    _goals = await _goalsStorageHelper.getGoals();
-    emit(HomeLoaded(
-      goals: _goals,
-    ));
+    final newId = await _goalsStorageHelper.addGoal(goal);
+    goal.id = newId; // Manually assign the new ID to the in-memory object.
+    _goals.add(goal);
+    emit(HomeLoaded(goals: _goals));
   }
 }

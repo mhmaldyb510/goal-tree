@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tree/core/models/resource_model.dart';
-import 'package:goal_tree/features/add_new_goal/model/goal_resources_provider.dart';
+import 'package:goal_tree/features/add_new_goal/model/validators.dart';
+import 'package:goal_tree/features/add_new_goal/providers/goal_resources_provider.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/add_new_goal_custom_text_form_field.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/add_resource_button.dart';
 import 'package:provider/provider.dart';
@@ -25,12 +26,7 @@ class _AddResourceFormState extends State<AddResourceForm> {
         children: [
           AddNewGoalCustomTextFormField(
             hintText: 'Resource Name',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+            validator: Validators.resourceNameValidation,
             onChanged: (value) => _resourceName = value,
           ),
           SizedBox(height: 24),

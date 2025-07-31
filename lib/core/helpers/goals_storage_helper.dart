@@ -6,8 +6,8 @@ class GoalsStorageHelper {
 
   GoalsStorageHelper(Store store) : _goalBox = store.box<GoalModel>();
 
-  Future<void> addGoal(GoalModel goal) async {
-    await _goalBox.putAsync(goal);
+  Future<int> addGoal(GoalModel goal) async {
+   return await _goalBox.putAsync(goal);
   }
 
   Future<List<GoalModel>> getGoals() async {

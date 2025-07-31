@@ -9,16 +9,16 @@ import 'package:goal_tree/features/home/cubit/home_cubit.dart';
 class CreateNewGoalButton extends StatelessWidget {
   const CreateNewGoalButton({
     super.key,
-    required GlobalKey<FormState> formKey,
+    required this.formKey,
     required this.goalTitle,
     required this.goalDescription,
     required this.goalDeadline,
     required this.goalPriority,
     required this.goalNotes,
     required this.goalResources,
-  }) : _formKey = formKey;
+  }) ;
 
-  final GlobalKey<FormState> _formKey;
+  final GlobalKey<FormState> formKey;
   final String goalTitle;
   final String goalDescription;
   final DateTime? goalDeadline;
@@ -38,7 +38,7 @@ class CreateNewGoalButton extends StatelessWidget {
         fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
       ),
       onPressed: () async {
-        if (_formKey.currentState?.validate() ?? false) {
+        if (formKey.currentState?.validate() ?? false) {
           await context.read<HomeCubit>().addGoal(
             GoalModel(
               title: goalTitle,

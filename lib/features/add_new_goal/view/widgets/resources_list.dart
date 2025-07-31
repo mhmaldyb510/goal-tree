@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
-import 'package:goal_tree/features/add_new_goal/model/goal_resources_provider.dart';
+import 'package:goal_tree/features/add_new_goal/providers/goal_resources_provider.dart';
 
 class ResourcesList extends StatefulWidget {
   const ResourcesList({super.key});
@@ -14,10 +14,11 @@ class ResourcesList extends StatefulWidget {
 class _ResourcesListState extends State<ResourcesList> {
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<GoalResourcesProvider>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(
-        context.read<GoalResourcesProvider>().goalResources.length,
+        provider.goalResources.length,
         (index) => ListTile(
           leading: Container(
             decoration: BoxDecoration(
@@ -28,18 +29,18 @@ class _ResourcesListState extends State<ResourcesList> {
             child: SvgPicture.asset('assets/icons/link_icon.svg'),
           ),
           title: Text(
-            context.read<GoalResourcesProvider>().goalResources[index].name,
+            provider.goalResources[index].name,
             style: AppTextStyles.secondaryTextStyle,
           ),
           subtitle: Text(
-            context.read<GoalResourcesProvider>().goalResources[index].link,
+            provider.goalResources[index].link,
             style: AppTextStyles.primaryTextStyle,
           ),
           trailing: IconButton(
             icon: const Icon(Icons.delete, color: Colors.red),
             onPressed: () {
-              context.read<GoalResourcesProvider>().removeResource(
-                context.read<GoalResourcesProvider>().goalResources[index],
+              provider.removeResource(
+                provider.goalResources[index],
               );
             },
           ),
