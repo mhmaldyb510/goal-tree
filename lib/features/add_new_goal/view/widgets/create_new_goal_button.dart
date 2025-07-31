@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_tree/core/app_constants.dart';
+import 'package:goal_tree/core/models/goal_model.dart';
+import 'package:goal_tree/core/models/goal_priority_enum.dart';
+import 'package:goal_tree/core/models/resource_model.dart';
+import 'package:goal_tree/features/home/cubit/home_cubit.dart';
+
+class CreateNewGoalButton extends StatelessWidget {
+  const CreateNewGoalButton({
+    super.key,
+    required GlobalKey<FormState> formKey,
+    required this.goalTitle,
+    required this.goalDescription,
+    required this.goalDeadline,
+    required this.goalPriority,
+    required this.goalNotes,
+    required this.goalResources,
+  }) : _formKey = formKey;
+
+  final GlobalKey<FormState> _formKey;
+  final String goalTitle;
+  final String goalDescription;
+  final DateTime? goalDeadline;
+  final GoalPriorityEnum goalPriority;
+  final String? goalNotes;
+  final List<ResourceModel> goalResources;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: AppConstants.kPrimaryColor,
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        foregroundColor: Colors.white,
+        side: BorderSide(),
+      ),
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          context.read<HomeCubit>().addGoal(
+            GoalModel(
+              title: goalTitle,
+              description: goalDescription,
+              deadline: goalDeadline,
+              priority: goalPriority.index,
+              notes: goalNotes ?? '',
+              initialResources: goalResources,
+            ),
+          );
+          Navigator.pop(context);
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text('Add new Goal')],
+      ),
+    );
+  }
+}

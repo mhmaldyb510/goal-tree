@@ -1,10 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+
 import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:goal_tree/core/models/resource_model.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
+import 'package:goal_tree/features/add_new_goal/model/validators.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/add_new_goal_custom_text_form_field.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/add_resource_button.dart';
+import 'package:goal_tree/features/add_new_goal/view/widgets/create_new_goal_button.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/priority_list.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/resources_list.dart';
 import 'package:goal_tree/features/home/view/widgets/add_resource_form.dart';
@@ -22,7 +25,8 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
   String goalTitle = '';
   String goalDescription = '';
   TextEditingController goalDeadlineController = TextEditingController();
-  GoalPriorityEnum? goalPriority;
+  DateTime? goalDeadline;
+  GoalPriorityEnum goalPriority = GoalPriorityEnum.medium;
   String? goalNotes;
   List<ResourceModel> goalResources = [];
   bool addingResource = false;
@@ -42,9 +46,18 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AddNewGoalCustomTextFormField(hintText: 'Goal Title'),
+            AddNewGoalCustomTextFormField(
+              onChanged: (value) {
+                goalTitle = value;
+              },
+              hintText: 'Goal Title',
+              validator: Validators.titleValidation,
+            ),
             SizedBox(height: 24),
             AddNewGoalCustomTextFormField(
+              onChanged: (value) {
+                goalDescription = value;
+              },
               hintText: 'Goal Description',
               maxLines: 5,
             ),
@@ -64,6 +77,7 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                   lastDate: DateTime(2100),
                 );
                 if (pickedDate != null) {
+                  goalDeadline = pickedDate;
                   goalDeadlineController.text = DateFormat(
                     'yyyy-MM-dd',
                   ).format(pickedDate);
@@ -73,7 +87,11 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
             SizedBox(height: 24),
             Text('Priority', style: AppTextStyles.headText).tr(),
             SizedBox(height: 24),
-            PriorityList(),
+            PriorityList(
+              onPriorityChanged: (value) {
+                goalPriority = value;
+              },
+            ),
             SizedBox(height: 24),
             AddNewGoalCustomTextFormField(hintText: 'Notes', maxLines: 5),
             SizedBox(height: 24),
@@ -98,6 +116,17 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                       });
                     },
                   ),
+
+            SizedBox(height: 24),
+            CreateNewGoalButton(
+              formKey: _formKey,
+              goalTitle: goalTitle,
+              goalDescription: goalDescription,
+              goalPriority: goalPriority,
+              goalNotes: goalNotes,
+              goalResources: goalResources,
+              goalDeadline: goalDeadline,
+            ),
           ],
         ),
       ),

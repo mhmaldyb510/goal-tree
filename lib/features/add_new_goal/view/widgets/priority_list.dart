@@ -3,7 +3,9 @@ import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/priority_box.dart';
 
 class PriorityList extends StatefulWidget {
-  const PriorityList({super.key});
+  const PriorityList({super.key, this.onPriorityChanged});
+  // create the Value change function to change the priority in every click
+  final ValueChanged<GoalPriorityEnum>? onPriorityChanged;
 
   @override
   State<PriorityList> createState() => _PriorityListState();
@@ -23,6 +25,7 @@ class _PriorityListState extends State<PriorityList> {
             setState(() {
               selectedPriority = value;
             });
+            widget.onPriorityChanged?.call(value);
           },
         ),
         PriorityBox(
@@ -32,6 +35,7 @@ class _PriorityListState extends State<PriorityList> {
             setState(() {
               selectedPriority = value;
             });
+            widget.onPriorityChanged?.call(value);
           },
         ),
         PriorityBox(
@@ -41,6 +45,7 @@ class _PriorityListState extends State<PriorityList> {
             setState(() {
               selectedPriority = value;
             });
+            widget.onPriorityChanged?.call(value);
           },
         ),
       ],

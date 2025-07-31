@@ -7,6 +7,8 @@ class AddNewGoalCustomTextFormField extends StatelessWidget {
   final bool readOnly;
   final void Function()? onTap;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final ValueChanged<String>? onChanged;
   const AddNewGoalCustomTextFormField({
     super.key,
     this.hintText,
@@ -15,11 +17,15 @@ class AddNewGoalCustomTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.controller,
+    this.validator,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
+      validator: validator,
       controller: controller,
       readOnly: readOnly,
       onTap: onTap,
