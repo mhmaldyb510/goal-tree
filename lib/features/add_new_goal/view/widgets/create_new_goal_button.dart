@@ -36,9 +36,9 @@ class CreateNewGoalButton extends StatelessWidget {
         foregroundColor: Colors.white,
         side: BorderSide(),
       ),
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          context.read<HomeCubit>().addGoal(
+      onPressed: () async {
+        if (_formKey.currentState?.validate() ?? false) {
+          await context.read<HomeCubit>().addGoal(
             GoalModel(
               title: goalTitle,
               description: goalDescription,
@@ -48,7 +48,9 @@ class CreateNewGoalButton extends StatelessWidget {
               initialResources: goalResources,
             ),
           );
-          Navigator.pop(context);
+          if (context.mounted) {
+            Navigator.pop(context);
+          }
         }
       },
       child: Row(

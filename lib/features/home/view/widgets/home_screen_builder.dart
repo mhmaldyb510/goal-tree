@@ -16,7 +16,7 @@ class HomeScreenBuilder extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is HomeLoaded) {
-          return context.watch<HomeCubit>().goals.isEmpty
+          return context.read<HomeCubit>().goals.isEmpty
               ? EmptyGoalsListBody()
               : HomeScreenBody();
         }

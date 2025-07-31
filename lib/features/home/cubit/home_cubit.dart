@@ -19,6 +19,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> addGoal(GoalModel goal) async {
     await _goalsStorageHelper.addGoal(goal);
-    getGoals();
+    goals = await _goalsStorageHelper.getGoals();  
+    emit(HomeLoaded()); 
   }
 }

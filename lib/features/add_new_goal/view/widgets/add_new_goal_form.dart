@@ -93,7 +93,11 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
               },
             ),
             SizedBox(height: 24),
-            AddNewGoalCustomTextFormField(hintText: 'Notes', maxLines: 5),
+            AddNewGoalCustomTextFormField(
+              hintText: 'Notes',
+              maxLines: 5,
+              onChanged: (value) => goalNotes = value,
+            ),
             SizedBox(height: 24),
             Text('Resources', style: AppTextStyles.headText).tr(),
             SizedBox(height: 24),

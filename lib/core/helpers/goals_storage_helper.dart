@@ -16,7 +16,6 @@ class GoalsStorageHelper {
   }
 
   Future<void> updateGoal(GoalModel goal) async {
-    removeGoal(goal);
     await _goalBox.putAsync(goal);
   }
 
