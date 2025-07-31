@@ -35,6 +35,7 @@ class CreateNewGoalButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         foregroundColor: Colors.white,
         side: BorderSide(),
+        fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
       ),
       onPressed: () async {
         if (_formKey.currentState?.validate() ?? false) {
@@ -53,10 +54,7 @@ class CreateNewGoalButton extends StatelessWidget {
           }
         }
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('Add new Goal')],
-      ),
+      child: Text('Add new Goal'),
     );
   }
 }

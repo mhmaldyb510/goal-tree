@@ -9,17 +9,21 @@ class HomeCubit extends Cubit<HomeState> {
   final GoalsStorageHelper _goalsStorageHelper;
   HomeCubit(this._goalsStorageHelper) : super(HomeInitial());
 
-  List<GoalModel> goals = [];
+  List<GoalModel> _goals = [];
 
   Future<void> getGoals() async {
     emit(HomeLoading());
-    goals = await _goalsStorageHelper.getGoals();
-    emit(HomeLoaded());
+    _goals = await _goalsStorageHelper.getGoals();
+    emit(HomeLoaded(
+      goals: _goals,
+    ));
   }
 
   Future<void> addGoal(GoalModel goal) async {
     await _goalsStorageHelper.addGoal(goal);
-    goals = await _goalsStorageHelper.getGoals();  
-    emit(HomeLoaded()); 
+    _goals = await _goalsStorageHelper.getGoals();
+    emit(HomeLoaded(
+      goals: _goals,
+    ));
   }
 }

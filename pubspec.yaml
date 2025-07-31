@@ -46,6 +46,7 @@ dependencies:
   objectbox: ^4.3.0
   objectbox_flutter_libs: ^4.3.0 
   path: ^1.9.1
+  provider: ^6.1.5
 
 
 dev_dependencies:

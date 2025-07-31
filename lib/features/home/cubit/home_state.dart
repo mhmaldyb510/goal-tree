@@ -8,5 +8,6 @@ final class HomeInitial extends HomeState {}
 final class HomeLoading extends HomeState {}
 
 final class HomeLoaded extends HomeState {
-  HomeLoaded();
+  final List<GoalModel> goals;
+  HomeLoaded({required this.goals});
 }

@@ -1,12 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
 import 'package:goal_tree/features/home/cubit/home_cubit.dart';
 import 'package:goal_tree/features/home/view/widgets/goals_list.dart';
 
 class HomeScreenBody extends StatelessWidget {
-  const HomeScreenBody({super.key});
+  final List<GoalModel> goals;
+  const HomeScreenBody({super.key, required this.goals});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class HomeScreenBody extends StatelessWidget {
               child: Text('My Goals', style: AppTextStyles.headText).tr(),
             ),
           ),
-          GoalsList(goals: context.watch<HomeCubit>().goals),
+          GoalsList(goals: goals),
         ],
       ),
     );
