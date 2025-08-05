@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:goal_tree/core/models/goal_model.dart';
 
 import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
 import 'package:goal_tree/features/add_new_goal/model/validators.dart';
+import 'package:goal_tree/features/home/cubit/home_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:goal_tree/features/add_new_goal/providers/goal_resources_provider.dart';
 import 'package:goal_tree/features/add_new_goal/view/widgets/add_new_goal_custom_text_form_field.dart';
@@ -124,13 +126,23 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
 
                 SizedBox(height: 24),
                 CreateNewGoalButton(
-                  formKey: _formKey,
-                  goalTitle: goalTitle.text,
-                  goalDescription: goalDescription.text,
-                  goalPriority: goalPriority,
-                  goalNotes: goalNotes.text,
-                  goalResources: goalResourcesProvider.goalResources,
-                  goalDeadline: goalDeadline,
+                  onPressed: () async {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      await context.read<HomeCubit>().addGoal(
+                        GoalModel(
+                          title: goalTitle.text,
+                          description: goalDescription.text,
+                          deadline: goalDeadline,
+                          priority: goalPriority.index,
+                          notes: goalNotes.text,
+                          initialResources: goalResourcesProvider.goalResources,
+                        ),
+                      );
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
+                    }
+                  },
                 ),
               ],
             ),

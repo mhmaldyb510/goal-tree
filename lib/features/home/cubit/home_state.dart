@@ -7,6 +7,11 @@ final class HomeInitial extends HomeState {}
 
 final class HomeLoading extends HomeState {}
 
+final class HomeError extends HomeState {
+  final String error;
+  HomeError({required this.error});
+}
+
 final class HomeLoaded extends HomeState {
   final List<GoalModel> goals;
   HomeLoaded({required this.goals});

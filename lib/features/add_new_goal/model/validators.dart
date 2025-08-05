@@ -9,7 +9,7 @@ class Validators {
 
   static String? resourceNameValidation(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter some text';
+      return 'Please enter a resource name';
     }
     return null;
   }
