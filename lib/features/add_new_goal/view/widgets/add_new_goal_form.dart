@@ -23,12 +23,12 @@ class AddNewGoalForm extends StatefulWidget {
 
 class _AddNewGoalFormState extends State<AddNewGoalForm> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController goalTitle = TextEditingController();
-  TextEditingController goalDescription = TextEditingController();
-  TextEditingController goalDeadlineController = TextEditingController();
+  final TextEditingController goalTitle = TextEditingController();
+  final TextEditingController goalDescription = TextEditingController();
+  final TextEditingController goalDeadlineController = TextEditingController();
   DateTime? goalDeadline;
   GoalPriorityEnum goalPriority = GoalPriorityEnum.medium;
-  TextEditingController goalNotes = TextEditingController();
+  final TextEditingController goalNotes = TextEditingController();
   bool addingResource = false;
 
   @override

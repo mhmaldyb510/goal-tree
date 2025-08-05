@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +15,14 @@ class HomeScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => context.read<HomeCubit>().getGoals(),
+      onRefresh: () async {
+        try {
+          await context.read<HomeCubit>().getGoals();
+        } catch (e) {
+          // Handle error, e.g., show a snackbar
+          log('Error refreshing goals: $e');
+        }
+      },
       child: CustomScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         slivers: [
