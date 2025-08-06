@@ -32,6 +32,7 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
   GoalPriorityEnum goalPriority = GoalPriorityEnum.medium;
   final TextEditingController goalNotes = TextEditingController();
   bool addingResource = false;
+  bool _isCreatingGoal = false;
 
   @override
   void dispose() {
@@ -126,23 +127,41 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
 
                 SizedBox(height: 24),
                 CreateNewGoalButton(
-                  onPressed: () async {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      await context.read<HomeCubit>().addGoal(
-                        GoalModel(
-                          title: goalTitle.text,
-                          description: goalDescription.text,
-                          deadline: goalDeadline,
-                          priority: goalPriority.index,
-                          notes: goalNotes.text,
-                          initialResources: goalResourcesProvider.goalResources,
-                        ),
-                      );
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                      }
-                    }
-                  },
+                  onPressed: _isCreatingGoal
+                      ? null
+                      : () async {
+                          if (!(_formKey.currentState?.validate() ?? false))
+                            return;
+
+                          setState(() {
+                            _isCreatingGoal = true;
+                          });
+
+                          try {
+                            await context.read<HomeCubit>().addGoal(
+                              GoalModel(
+                                title: goalTitle.text,
+                                description: goalDescription.text,
+                                deadline: goalDeadline,
+                                priority: goalPriority.index,
+                                notes: goalNotes.text,
+                                initialResources:
+                                    goalResourcesProvider.goalResources,
+                              ),
+                            );
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          } catch (e) {
+                            // Optionally, show an error message to the user
+                          } finally {
+                            if (mounted) {
+                              setState(() {
+                                _isCreatingGoal = false;
+                              });
+                            }
+                          }
+                        },
                 ),
               ],
             ),

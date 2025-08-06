@@ -22,7 +22,7 @@ class _ResourcesListState extends State<ResourcesList> {
         (index) => ListTile(
           leading: Container(
             decoration: BoxDecoration(
-              color: Color(0xfff1f2f4),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(8),
             ),
             padding: EdgeInsets.all(11),
@@ -39,9 +39,7 @@ class _ResourcesListState extends State<ResourcesList> {
           trailing: IconButton(
             icon: const Icon(Icons.delete, color: Colors.red),
             onPressed: () {
-              provider.removeResource(
-                provider.goalResources[index],
-              );
+              provider.removeResource(provider.goalResources[index]);
             },
           ),
         ),
