@@ -3,14 +3,11 @@ import 'package:goal_tree/core/app_constants.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
 
 class GoalDetailsBottomBar extends StatelessWidget {
-  const GoalDetailsBottomBar({
-    super.key,
-  });
+  const GoalDetailsBottomBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 84,
+    return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
