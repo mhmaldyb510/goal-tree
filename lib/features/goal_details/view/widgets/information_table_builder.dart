@@ -18,43 +18,54 @@ class InformationTableBuilder extends StatefulWidget {
 }
 
 class _InformationTableBuilderState extends State<InformationTableBuilder> {
-  late DateFormat _dateFormat;
+  DateFormat? _dateFormat;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _dateFormat = DateFormat('MMMM, dd, yyyy');
-    initializeDateFormatting(context.locale.languageCode)
-        .then((_) {
-          if (mounted) {
-            setState(() {
-              _dateFormat = DateFormat(
-                'MMMM, dd, yyyy',
-                context.locale.languageCode,
-              );
-            });
-          }
-        })
-        .catchError((error) {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Failed to initialize date formatting: $error'),
-              ),
-            );
-          }
-          debugPrint('Failed to initialize date formatting: $error');
+    // Re-initialize if locale changes.
+    if (_dateFormat?.locale != context.locale.languageCode) {
+      _initializeDateFormat();
+    }
+  }
+
+  void _initializeDateFormat() async {
+    final locale = context.locale.languageCode;
+    try {
+      await initializeDateFormatting(locale);
+      if (mounted) {
+        setState(() {
+          _dateFormat = DateFormat('MMMM, dd, yyyy', locale);
         });
+      }
+    } catch (error) {
+      debugPrint('Failed to initialize date formatting: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to initialize date formatting: $error'),
+          ),
+        );
+        // Fallback to default on error
+        setState(() {
+          _dateFormat = DateFormat('MMMM, dd, yyyy');
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_dateFormat == null) {
+      // Show a loader while date format is being initialized to prevent race conditions.
+      return const Center(child: CircularProgressIndicator());
+    }
     return InfoTable(
       information: [
         InfoModel(
           infoKey: 'DeadLine'.tr(),
           infoValue: widget.goal.deadline != null
-              ? _dateFormat.format(widget.goal.deadline!)
+              ? _dateFormat!.format(widget.goal.deadline!)
               : 'No deadline'.tr(),
         ),
         InfoModel(
