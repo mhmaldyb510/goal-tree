@@ -19,8 +19,12 @@ class HomeScreenBody extends StatelessWidget {
         try {
           await context.read<HomeCubit>().getGoals();
         } catch (e) {
-          // Handle error, e.g., show a snackbar
           log('Error refreshing goals: $e');
+           if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to refresh goals: ${e.toString()}')),
+            );
+          }
         }
       },
       child: CustomScrollView(

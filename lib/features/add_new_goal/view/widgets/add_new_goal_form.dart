@@ -153,7 +153,15 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                               Navigator.pop(context);
                             }
                           } catch (e) {
-                            // Optionally, show an error message to the user
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Failed to add goal: ${e.toString()}',
+                                  ),
+                                ),
+                              );
+                            }
                           } finally {
                             if (mounted) {
                               setState(() {
