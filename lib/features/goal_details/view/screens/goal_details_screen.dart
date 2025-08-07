@@ -31,7 +31,10 @@ class GoalDetailsScreen extends StatelessWidget {
           SizedBox(height: 16),
           InformationTableBuilder(goal: goal),
           SizedBox(height: 50),
-          Text('${goal.progress}%', style: AppTextStyles.primaryTextStyle),
+          Text(
+            '${(goal.progress).clamp(0.0, 100.0).toStringAsFixed(0)}%',
+            style: AppTextStyles.primaryTextStyle,
+          ),
           SizedBox(height: 8),
           LinearProgressIndicator(
             color: Color(0xff121417),

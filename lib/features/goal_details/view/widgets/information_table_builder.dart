@@ -20,7 +20,7 @@ class InformationTableBuilder extends StatelessWidget {
           infoValue: goal.deadline != null
               ? DateFormat(
                   'MMMM, dd, yyyy',
-                ).format(goal.deadline ?? DateTime.now())
+                ).format(goal.deadline!)
               : 'No deadline',
         ),
         InfoModel(
