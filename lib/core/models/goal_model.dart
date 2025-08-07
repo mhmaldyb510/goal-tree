@@ -28,5 +28,14 @@ class GoalModel {
     this.deadline,
     this.notes = '',
     this.priority = 0,
-  });
+    List<ResourceModel>? initialResources,
+    List<NodeModel>? initialNodes,
+  }) {
+    if (initialResources != null) {
+      resources.addAll(initialResources);
+    }
+    if (initialNodes != null) {
+      nodes.addAll(initialNodes);
+    }
+  }
 }
