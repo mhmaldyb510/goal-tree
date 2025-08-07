@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:goal_tree/core/app_constants.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
+import 'package:goal_tree/features/goal_details/view/widgets/styles/goal_details_button_styles.dart';
 
 class GoalDetailsBottomBar extends StatelessWidget {
   const GoalDetailsBottomBar({super.key});
@@ -16,12 +16,7 @@ class GoalDetailsBottomBar extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {},
-              style: TextButton.styleFrom(
-                backgroundColor: Color(0xffF0F2F5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
+              style: GoalDetailsButtonStyles.editButtonStyle,
               child: Text(
                 'Edit Goal'.tr(),
                 style: AppTextStyles.secondaryTextStyle.copyWith(
@@ -32,12 +27,7 @@ class GoalDetailsBottomBar extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {},
-              style: TextButton.styleFrom(
-                backgroundColor: AppConstants.kPrimaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
+              style: GoalDetailsButtonStyles.completeButtonStyle,
               child: Text(
                 'Mark Completed'.tr(),
                 style: AppTextStyles.secondaryTextStyle.copyWith(

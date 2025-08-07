@@ -6,10 +6,39 @@ import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:goal_tree/features/goal_details/model/info_model.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/info_table.dart';
 
-class InformationTableBuilder extends StatelessWidget {
+class InformationTableBuilder extends StatefulWidget {
   const InformationTableBuilder({super.key, required this.goal});
 
   final GoalModel goal;
+
+  @override
+  State<InformationTableBuilder> createState() =>
+      _InformationTableBuilderState();
+}
+
+class _InformationTableBuilderState extends State<InformationTableBuilder> {
+  late DateFormat _dateFormat;
+  late Locale _lastLocale;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateDateFormat();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final currentLocale = context.locale;
+    if (_lastLocale != currentLocale) {
+      _updateDateFormat();
+    }
+  }
+
+  void _updateDateFormat() {
+    _lastLocale = context.locale;
+    _dateFormat = DateFormat('MMMM, dd, yyyy', _lastLocale.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +46,16 @@ class InformationTableBuilder extends StatelessWidget {
       information: [
         InfoModel(
           infoKey: 'DeadLine'.tr(),
-          infoValue: goal.deadline != null
-              ? DateFormat(
-                  'MMMM, dd, yyyy',
-                  context.locale.toString(),
-                ).format(goal.deadline!)
+          infoValue: widget.goal.deadline != null
+              ? _dateFormat.format(widget.goal.deadline!)
               : 'No deadline'.tr(),
         ),
         InfoModel(
           infoKey: 'Priority'.tr(),
           infoValue:
-              (goal.priority >= 0 &&
-                  goal.priority < GoalPriorityEnum.values.length)
-              ? GoalPriorityEnum.values[goal.priority].name.capitalize()
+              (widget.goal.priority >= 0 &&
+                  widget.goal.priority < GoalPriorityEnum.values.length)
+              ? GoalPriorityEnum.values[widget.goal.priority].name.capitalize()
               : 'Unknown'.tr(),
         ),
       ],
