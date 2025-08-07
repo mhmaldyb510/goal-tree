@@ -62,7 +62,7 @@ lib/
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/your-username/goal-tree.git
+   git clone https://github.com/mhmaldyb510/goal-tree.git
    cd goal-tree
    ```
 
