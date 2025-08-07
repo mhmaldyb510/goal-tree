@@ -25,7 +25,11 @@ class InformationTableBuilder extends StatelessWidget {
         ),
         InfoModel(
           infoKey: 'Priority',
-          infoValue: GoalPriorityEnum.values[goal.priority].name.capitalize(),
+          infoValue:
+              (goal.priority >= 0 &&
+                  goal.priority < GoalPriorityEnum.values.length)
+              ? GoalPriorityEnum.values[goal.priority].name.capitalize()
+              : 'Unknown',
         ),
       ],
     );
