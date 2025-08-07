@@ -13,7 +13,9 @@ class GoalTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const GoalDetailsScreen()),
+          MaterialPageRoute(
+            builder: (context) => GoalDetailsScreen(goal: goal),
+          ),
         );
       },
       contentPadding: EdgeInsets.symmetric(horizontal: 16),

@@ -130,8 +130,9 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                   onPressed: _isCreatingGoal
                       ? null
                       : () async {
-                          if (!(_formKey.currentState?.validate() ?? false))
+                          if (!(_formKey.currentState?.validate() ?? false)) {
                             return;
+                          }
 
                           setState(() {
                             _isCreatingGoal = true;
