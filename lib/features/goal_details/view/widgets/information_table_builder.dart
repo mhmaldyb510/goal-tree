@@ -24,16 +24,27 @@ class _InformationTableBuilderState extends State<InformationTableBuilder> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _dateFormat = DateFormat('MMMM, dd, yyyy');
-    initializeDateFormatting(context.locale.languageCode).then((_) {
-      if (mounted) {
-        setState(() {
-          _dateFormat = DateFormat(
-            'MMMM, dd, yyyy',
-            context.locale.languageCode,
-          );
+    initializeDateFormatting(context.locale.languageCode)
+        .then((_) {
+          if (mounted) {
+            setState(() {
+              _dateFormat = DateFormat(
+                'MMMM, dd, yyyy',
+                context.locale.languageCode,
+              );
+            });
+          }
+        })
+        .catchError((error) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Failed to initialize date formatting: $error'),
+              ),
+            );
+          }
+          debugPrint('Failed to initialize date formatting: $error');
         });
-      }
-    });
   }
 
   @override
