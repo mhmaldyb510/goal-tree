@@ -109,4 +109,4 @@ This project is licensed under the MIT License.
 ## 🙋‍♂️ Author
 
 Made with ❤️ by **Mohamed Naser Mohamed Aldeeb**  
-[GitHub](https://github.com/mhmaldyb510) • [LinkedIn](https://www.linkedin.com/in/mhmaldyb510)
+[GitHub](https://github.com/mhmaldyb510) • [LinkedIn](https://www.linkedin.com/in/mohamed-naser-aldeeb/)
