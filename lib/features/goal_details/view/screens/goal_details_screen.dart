@@ -38,7 +38,7 @@ class GoalDetailsScreen extends StatelessWidget {
           SizedBox(height: 8),
           LinearProgressIndicator(
             color: Color(0xff121417),
-            value: goal.progress / 100,
+            value: (goal.progress / 100).clamp(0.0, 1.0),
             minHeight: 8,
             borderRadius: BorderRadius.circular(4),
           ),
