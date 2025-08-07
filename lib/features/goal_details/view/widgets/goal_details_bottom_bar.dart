@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:goal_tree/core/app_constants.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
@@ -22,7 +23,7 @@ class GoalDetailsBottomBar extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Edit Goal',
+                'Edit Goal'.tr(),
                 style: AppTextStyles.secondaryTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -38,7 +39,7 @@ class GoalDetailsBottomBar extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Mark Completed',
+                'Mark Completed'.tr(),
                 style: AppTextStyles.secondaryTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,

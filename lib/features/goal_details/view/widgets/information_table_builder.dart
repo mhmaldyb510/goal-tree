@@ -16,21 +16,21 @@ class InformationTableBuilder extends StatelessWidget {
     return InfoTable(
       information: [
         InfoModel(
-          infoKey: 'DeadLine',
+          infoKey: 'DeadLine'.tr(),
           infoValue: goal.deadline != null
               ? DateFormat(
                   'MMMM, dd, yyyy',
                   context.locale.toString(),
                 ).format(goal.deadline!)
-              : 'No deadline',
+              : 'No deadline'.tr(),
         ),
         InfoModel(
-          infoKey: 'Priority',
+          infoKey: 'Priority'.tr(),
           infoValue:
               (goal.priority >= 0 &&
                   goal.priority < GoalPriorityEnum.values.length)
               ? GoalPriorityEnum.values[goal.priority].name.capitalize()
-              : 'Unknown',
+              : 'Unknown'.tr(),
         ),
       ],
     );
