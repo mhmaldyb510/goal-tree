@@ -12,7 +12,7 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en')],
+      supportedLocales: [Locale('en'), Locale('ar')],
       fallbackLocale: Locale('en'),
       path: 'assets/translations',
       child: const GoalTree(),

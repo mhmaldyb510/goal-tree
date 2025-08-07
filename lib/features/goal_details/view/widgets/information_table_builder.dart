@@ -5,6 +5,7 @@ import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:goal_tree/features/goal_details/model/info_model.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/info_table.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class InformationTableBuilder extends StatefulWidget {
   const InformationTableBuilder({super.key, required this.goal});
@@ -18,26 +19,19 @@ class InformationTableBuilder extends StatefulWidget {
 
 class _InformationTableBuilderState extends State<InformationTableBuilder> {
   late DateFormat _dateFormat;
-  late Locale _lastLocale;
 
   @override
-  void initState() {
-    super.initState();
-    _updateDateFormat();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final currentLocale = context.locale;
-    if (_lastLocale != currentLocale) {
-      _updateDateFormat();
+  void didChangeDependencies() async {
+    _dateFormat = DateFormat('MMMM, dd, yyyy');
+    await initializeDateFormatting(
+      Localizations.localeOf(context).languageCode,
+    );
+    if (mounted) {
+      setState(() {
+        _dateFormat = DateFormat('MMMM, dd, yyyy', context.locale.languageCode);
+      });
     }
-  }
-
-  void _updateDateFormat() {
-    _lastLocale = context.locale;
-    _dateFormat = DateFormat('MMMM, dd, yyyy', _lastLocale.toString());
+    super.didChangeDependencies();
   }
 
   @override
