@@ -21,17 +21,19 @@ class _InformationTableBuilderState extends State<InformationTableBuilder> {
   late DateFormat _dateFormat;
 
   @override
-  void didChangeDependencies() async {
-    _dateFormat = DateFormat('MMMM, dd, yyyy');
-    await initializeDateFormatting(
-      Localizations.localeOf(context).languageCode,
-    );
-    if (mounted) {
-      setState(() {
-        _dateFormat = DateFormat('MMMM, dd, yyyy', context.locale.languageCode);
-      });
-    }
+  void didChangeDependencies() {
     super.didChangeDependencies();
+    _dateFormat = DateFormat('MMMM, dd, yyyy');
+    initializeDateFormatting(context.locale.languageCode).then((_) {
+      if (mounted) {
+        setState(() {
+          _dateFormat = DateFormat(
+            'MMMM, dd, yyyy',
+            context.locale.languageCode,
+          );
+        });
+      }
+    });
   }
 
   @override
