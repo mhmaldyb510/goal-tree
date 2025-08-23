@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tree/core/models/goal_model.dart';
-import 'package:goal_tree/core/models/goal_priority_enum.dart';
 import 'package:goal_tree/features/home/view/widgets/goal_tail.dart';
 
 class GoalsList extends StatelessWidget {
@@ -17,30 +16,3 @@ class GoalsList extends StatelessWidget {
     );
   }
 }
-
-List<GoalModel> goals = [
-  GoalModel(
-    goalId: '1',
-    title: 'Goal 1',
-    progress: 20,
-    description: '',
-    notes: '',
-    priority: GoalPriorityEnum.low.index,
-  ),
-  GoalModel(
-    goalId: '2',
-    title: 'Goal 2',
-    progress: 30,
-    description: '',
-    notes: '',
-    priority: GoalPriorityEnum.medium.index,
-  ),
-  GoalModel(
-    goalId: '3',
-    title: 'Goal 3',
-    progress: 60,
-    description: '',
-    notes: '',
-    priority: GoalPriorityEnum.high.index,
-  ),
-];

@@ -1,11 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
 
 class GoalDetailsAppBar extends StatelessWidget {
   const GoalDetailsAppBar({
     super.key,
+    required this.goal,
   });
+
+  final GoalModel goal;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class GoalDetailsAppBar extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pop(context, goal);
         },
       ),
     );
