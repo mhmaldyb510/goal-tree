@@ -6,15 +6,31 @@ on:
 
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Flutter (stable channel, latest)
-        uses: subosito/flutter-action@v2
+      # Cache Flutter SDK
+      - name: Cache Flutter SDK
+        uses: actions/cache@v4
         with:
-          channel: 'stable'
+          path: ~/.flutter-sdk
+          key: ${{ runner.os }}-flutter-stable
+
+      # Install Flutter if not cached
+      - name: Install Flutter
+        run: |
+          if [ ! -d "$HOME/.flutter-sdk" ]; then
+            git clone https://github.com/flutter/flutter.git -b stable $HOME/.flutter-sdk
+          fi
+          echo "$HOME/.flutter-sdk/bin" >> $GITHUB_PATH
+          flutter --version
+
+      # Upgrade Flutter to latest stable (if already cached, keep it updated)
+      - name: Upgrade Flutter (if needed)
+        run: $HOME/.flutter-sdk/bin/flutter upgrade --force
 
       - name: Cache Pub dependencies
         uses: actions/cache@v4
