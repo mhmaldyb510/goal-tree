@@ -19,14 +19,14 @@ jobs:
           path: ~/.flutter-sdk
           key: ${{ runner.os }}-flutter-stable
 
-      # Install Flutter if not cached
-      - name: Install Flutter
-        run: |
-          if [ ! -d "$HOME/.flutter-sdk" ]; then
-            git clone https://github.com/flutter/flutter.git -b stable $HOME/.flutter-sdk
-          fi
-          echo "$HOME/.flutter-sdk/bin" >> $GITHUB_PATH
-          flutter --version
+      - name: Set up Flutter (with caching)
+          run: |
+            if [ ! -d "$HOME/.flutter-sdk" ]; then
+              git clone https://github.com/flutter/flutter.git -b stable $HOME/.flutter-sdk
+            fi
+            export PATH="$HOME/.flutter-sdk/bin:$PATH"
+            flutter --version
+
 
       # Upgrade Flutter to latest stable (if already cached, keep it updated)
       - name: Upgrade Flutter (if needed)
