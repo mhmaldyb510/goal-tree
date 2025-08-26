@@ -49,6 +49,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # Cache Android SDK components (NDK, CMake, platforms)
+      - name: Cache Android SDK
+        uses: actions/cache@v4
+        with:
+          path: |
+            /usr/local/lib/android/sdk/ndk
+            /usr/local/lib/android/sdk/cmake
+            /usr/local/lib/android/sdk/platforms
+          key: ${{ runner.os }}-android-sdk
+          restore-keys: |
+            ${{ runner.os }}-android-sdk
+
       - name: Accept Android SDK licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
         env:
