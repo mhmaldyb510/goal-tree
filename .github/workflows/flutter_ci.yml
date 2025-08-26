@@ -27,9 +27,6 @@ jobs:
       - name: Run code analysis
         run: flutter analyze
 
-      - name: Verify debug build (sanity check)
-        run: flutter build apk --debug
-
       - name: Build release APK
         run: flutter build apk --release
 
