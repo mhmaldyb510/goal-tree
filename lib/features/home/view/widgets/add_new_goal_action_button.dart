@@ -17,7 +17,7 @@ class AddNewGoalActionButton extends StatelessWidget {
       onPressed: () {
         showCupertinoSheet(
           context: context,
-          pageBuilder: (context) => const AddNewGoalScreen(),
+          builder: (context) => const AddNewGoalScreen(),
         );
       },
       label: Row(
