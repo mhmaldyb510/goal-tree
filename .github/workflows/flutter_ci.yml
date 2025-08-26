@@ -16,16 +16,10 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Install Android SDK Command-line Tools
-        run: |
-          mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
-          curl -sSL https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -o cmdline-tools.zip
-          unzip -q cmdline-tools.zip -d /usr/local/lib/android/sdk/cmdline-tools
-          mv /usr/local/lib/android/sdk/cmdline-tools/cmdline-tools/* /usr/local/lib/android/sdk/cmdline-tools/latest/
-          rm -rf cmdline-tools.zip
-
       - name: Accept Android SDK licenses
-        run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
 
       - name: Install dependencies
         run: flutter pub get
