@@ -66,12 +66,15 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   Future<void> createNewNode(Node parent, String name) async {
     final parentId = parent.key?.value;
     if (parentId == null) return;
+    final newNode = NodeModel(name: name);
+    await objectBox.store.box<NodeModel>().putAsync(newNode);
+
     if (parentId == goal.id) {
-      goal.nodes.add(NodeModel(name: name));
+      goal.nodes.add(newNode);
     } else {
       NodeModel? parentNode = _findNodeById(parentId, goal.nodes);
       if (parentNode != null) {
-        parentNode.children.add(NodeModel(name: name));
+        parentNode.children.add(newNode);
         await objectBox.store.box<NodeModel>().putAsync(parentNode);
       }
     }

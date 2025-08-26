@@ -2,8 +2,8 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class NodeModel {
-  @Id()
-  int id = 0;
+  @Id(assignable: true)
+  int id = DateTime.now().millisecondsSinceEpoch;
 
   String name;
   bool isDone;
