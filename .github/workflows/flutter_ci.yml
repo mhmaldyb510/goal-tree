@@ -19,22 +19,17 @@ jobs:
           path: ~/.flutter-sdk
           key: ${{ runner.os }}-flutter-stable
 
-      - name: Set up Flutter (cached)
+      - name: Set up Flutter (with cache/upgrade)
         run: |
           if [ ! -d "$HOME/.flutter-sdk" ]; then
             echo "Flutter SDK not found in cache. Cloning..."
             git clone https://github.com/flutter/flutter.git -b stable $HOME/.flutter-sdk
           else
-            echo "Using cached Flutter SDK."
+            echo "Using cached Flutter SDK. Upgrading..."
+            $HOME/.flutter-sdk/bin/flutter upgrade --force
           fi
           echo "$HOME/.flutter-sdk/bin" >> $GITHUB_PATH
           $HOME/.flutter-sdk/bin/flutter --version
-
-
-
-      # Upgrade Flutter to latest stable (if already cached, keep it updated)
-      - name: Upgrade Flutter (if needed)
-        run: $HOME/.flutter-sdk/bin/flutter upgrade --force
 
       - name: Cache Pub dependencies
         uses: actions/cache@v4
