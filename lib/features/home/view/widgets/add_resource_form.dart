@@ -29,12 +29,12 @@ class _AddResourceFormState extends State<AddResourceForm> {
             validator: Validators.resourceNameValidation,
             onChanged: (value) => _resourceName = value,
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           AddNewGoalCustomTextFormField(
             hintText: 'Resource Link',
             onChanged: (value) => _resourceLink = value,
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           AddResourceButton(
             onPressed: () {
               if (_formKey.currentState?.validate() ?? false) {
@@ -47,7 +47,7 @@ class _AddResourceFormState extends State<AddResourceForm> {
               }
             },
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
         ],
       ),
     );

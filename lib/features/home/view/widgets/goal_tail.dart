@@ -29,15 +29,15 @@ class _GoalTileState extends State<GoalTile> {
           ),
         );
       },
-      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       leading: Container(
         height: 48,
         width: 48,
         decoration: BoxDecoration(
-          color: Color(0xffF0F2F5),
+          color: const Color(0xffF0F2F5),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(Icons.account_tree_outlined),
+        child: const Icon(Icons.account_tree_outlined),
       ),
       title: Text(
         goal.title,
@@ -54,7 +54,7 @@ class _GoalTileState extends State<GoalTile> {
           fontSize: 14,
         ),
       ),
-      trailing: Icon(Icons.arrow_forward_ios),
+      trailing: const Icon(Icons.arrow_forward_ios),
     );
   }
 }

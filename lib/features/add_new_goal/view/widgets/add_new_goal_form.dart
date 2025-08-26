@@ -50,7 +50,7 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
         return Form(
           key: _formKey,
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -59,19 +59,19 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                   hintText: 'Goal Title',
                   validator: Validators.titleValidation,
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 AddNewGoalCustomTextFormField(
                   controller: goalDescription,
                   hintText: 'Goal Description',
                   maxLines: 5,
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Text('Deadline', style: AppTextStyles.headText).tr(),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 AddNewGoalCustomTextFormField(
                   controller: goalDeadlineController,
                   hintText: 'Select Deadline',
-                  suffixIcon: Icon(Icons.calendar_month),
+                  suffixIcon: const Icon(Icons.calendar_month),
                   readOnly: true,
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
@@ -88,27 +88,27 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                     }
                   },
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Text('Priority', style: AppTextStyles.headText).tr(),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 PriorityList(
                   onPriorityChanged: (value) {
                     goalPriority = value;
                   },
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 AddNewGoalCustomTextFormField(
                   controller: goalNotes,
                   hintText: 'Notes',
                   maxLines: 5,
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Text('Resources', style: AppTextStyles.headText).tr(),
-                SizedBox(height: 24),
-                ResourcesList(),
-                if (addingResource) AddResourceForm(),
+                const SizedBox(height: 24),
+                const ResourcesList(),
+                if (addingResource) const AddResourceForm(),
 
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 !addingResource
                     ? AddResourceButton(
                         onPressed: () {
@@ -125,7 +125,7 @@ class _AddNewGoalFormState extends State<AddNewGoalForm> {
                         },
                       ),
 
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 CreateNewGoalButton(
                   onPressed: _isCreatingGoal
                       ? null

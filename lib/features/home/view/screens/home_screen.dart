@@ -8,10 +8,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: const HomeAppBar(),
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: HomeAppBar(),
       ),
       body: HomeScreenBuilder(),
       floatingActionButton: AddNewGoalActionButton(),

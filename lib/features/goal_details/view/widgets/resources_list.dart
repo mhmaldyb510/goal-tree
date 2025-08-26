@@ -12,17 +12,17 @@ class ResourcesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: resources.length,
       itemBuilder: (context, index) => ListTile(
         onTap: () {
           launchUrl(Uri.parse(resources[index].link));
         },
         leading: Container(decoration: BoxDecoration(
-          color: Color(0xfff1f2f4),
+          color: const Color(0xfff1f2f4),
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: EdgeInsets.all(11),
+        padding: const EdgeInsets.all(11),
           child: SvgPicture.asset('assets/icons/link_icon.svg',)),
         title: Text(resources[index].name,style: AppTextStyles.secondaryTextStyle ),
 

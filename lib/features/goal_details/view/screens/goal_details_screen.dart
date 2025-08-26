@@ -33,37 +33,37 @@ class GoalDetailsScreen extends StatelessWidget {
             },
             child: Scaffold(
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(kToolbarHeight),
+                preferredSize: const Size.fromHeight(kToolbarHeight),
                 child: GoalDetailsAppBar(goal: goal),
               ),
               body: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 children: [
                   GoalTitle(title: goal.title),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   GoalDescription(description: goal.description),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   InformationTableBuilder(goal: goal),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Text(
                     '${(goal.progress).clamp(0.0, 100.0).toStringAsFixed(0)}%',
                     style: AppTextStyles.primaryTextStyle,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   LinearProgressIndicator(
-                    color: Color(0xff121417),
+                    color: const Color(0xff121417),
                     value: (goal.progress / 100).clamp(0.0, 1.0),
                     minHeight: 8,
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   Text('Goal Tree', style: AppTextStyles.headText).tr(),
-                  SizedBox(height: 32),
-                  GoalTreePlaceholder(),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
+                  const GoalTreePlaceholder(),
+                  const SizedBox(height: 32),
                   Text('Notes', style: AppTextStyles.headText).tr(),
 
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   goal.notes.isNotEmpty
                       ? Text(
                           goal.notes,
@@ -73,9 +73,9 @@ class GoalDetailsScreen extends StatelessWidget {
                           'No notes'.tr(),
                           style: AppTextStyles.secondaryTextStyle,
                         ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   Text('Resources', style: AppTextStyles.headText).tr(),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   goal.resources.isNotEmpty
                       ? ResourcesList(resources: goal.resources)
                       : Text(
@@ -84,7 +84,7 @@ class GoalDetailsScreen extends StatelessWidget {
                         ),
                 ],
               ),
-              bottomNavigationBar: GoalDetailsBottomBar(),
+              bottomNavigationBar: const GoalDetailsBottomBar(),
             ),
           );
         },

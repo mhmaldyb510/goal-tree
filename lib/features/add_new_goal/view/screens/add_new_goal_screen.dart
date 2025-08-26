@@ -10,13 +10,13 @@ class AddNewGoalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: const AddNewGoalAppBar(),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AddNewGoalAppBar(),
       ),
       body: ChangeNotifierProvider(
         create: (context) => GoalResourcesProvider(),
-        child: AddNewGoalForm(),
+        child: const AddNewGoalForm(),
       ),
     );
   }

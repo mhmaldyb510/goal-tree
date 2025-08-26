@@ -20,7 +20,7 @@ class PriorityBox extends StatelessWidget {
     return GestureDetector(
       onTap: () => onSelected?.call(priority),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10.5),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10.5),
         decoration: BoxDecoration(
           color: isSelected ? Colors.grey : Colors.transparent,
           border: Border.all(color: Colors.grey),

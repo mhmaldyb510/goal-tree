@@ -5,7 +5,7 @@ class AppLightTheme {
   ThemeData get theme => ThemeData(
     brightness: Brightness.light,
     primaryColor: AppConstants.kPrimaryColor,
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: AppConstants.kPrimaryColor,
       surfaceContainerHighest: Color(0xfff1f2f4),
     ),

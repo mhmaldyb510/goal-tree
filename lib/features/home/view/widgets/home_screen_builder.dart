@@ -17,10 +17,10 @@ class HomeScreenBuilder extends StatelessWidget {
         }
         if (state is HomeLoaded) {
           return state.goals.isEmpty
-              ? EmptyGoalsListBody()
+              ? const EmptyGoalsListBody()
               : HomeScreenBody(goals: state.goals);
         }
-        return NoDataBody();
+        return const NoDataBody();
       },
     );
   }

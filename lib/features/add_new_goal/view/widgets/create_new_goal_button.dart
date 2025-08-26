@@ -12,13 +12,13 @@ class CreateNewGoalButton extends StatelessWidget {
     return TextButton(
       style: TextButton.styleFrom(
         backgroundColor: AppConstants.kPrimaryColor,
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         foregroundColor: Colors.white,
         fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
       ),
       onPressed: onPressed,
-      child: Text('Add new Goal').tr(),
+      child: const Text('Add new Goal').tr(),
     );
   }
 }

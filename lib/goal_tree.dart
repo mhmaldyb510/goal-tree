@@ -21,7 +21,7 @@ class GoalTree extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Goal Tree',
-        home: HomeScreen(),
+        home: const HomeScreen(),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: AppConstants.kPrimaryColor,

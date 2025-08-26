@@ -17,14 +17,14 @@ class AddNewGoalActionButton extends StatelessWidget {
       onPressed: () {
         showCupertinoSheet(
           context: context,
-          pageBuilder: (context) => AddNewGoalScreen(),
+          pageBuilder: (context) => const AddNewGoalScreen(),
         );
       },
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.add),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(
             'New Goal',
             style: TextStyle(
