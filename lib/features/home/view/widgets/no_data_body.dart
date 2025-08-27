@@ -13,7 +13,7 @@ class NoDataBody extends StatelessWidget {
         onPressed: () => context.read<HomeCubit>().getGoals(),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: [Icon(Icons.refresh), Text('Refresh').tr()],
+          children: [const Icon(Icons.refresh), const Text('Refresh').tr()],
         ),
       ),
     );

@@ -15,7 +15,7 @@ class SelectNodeOptions extends StatelessWidget {
         Text(
           provider.nodeNames[provider.selectedNode!.key!.value] ??
               provider.selectedNode!.key!.value,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         const SizedBox(width: 8),
         SelectNodeButton(
@@ -25,7 +25,7 @@ class SelectNodeOptions extends StatelessWidget {
           },
           icon: Icons.add,
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         SelectNodeButton(
           onPressed: () => provider.addToDone(provider.selectedNode!),
           icon: Icons.remove,
@@ -45,10 +45,10 @@ class SelectNodeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       style: IconButton.styleFrom(
-        padding: EdgeInsets.all(4),
+        padding: const EdgeInsets.all(4),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(8),
-          side: BorderSide(width: 2),
+          side: const BorderSide(width: 2),
         ),
       ),
       onPressed: onPressed,

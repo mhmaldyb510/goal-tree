@@ -14,7 +14,7 @@ class TreeWidgetBuilder extends StatelessWidget {
       child: provider.graph.nodes.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : InteractiveViewer(
-              boundaryMargin: EdgeInsets.all(100),
+              boundaryMargin: const EdgeInsets.all(100),
               constrained: false,
               child: GraphView(
                 graph: provider.graph,

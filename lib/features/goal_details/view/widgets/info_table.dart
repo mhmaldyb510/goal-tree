@@ -17,14 +17,14 @@ class InfoTable extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     child: Divider(),
                   ),
                   Text(
                     information[index].infoKey,
                     style: AppTextStyles.secondaryTextStyle.copyWith(
-                      color: Color(0xff637387),
+                      color: const Color(0xff637387),
                     ),
                   ),
                 ],
@@ -32,8 +32,8 @@ class InfoTable extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     child: Divider(),
                   ),
                   Text(

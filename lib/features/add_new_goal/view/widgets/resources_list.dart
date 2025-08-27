@@ -25,7 +25,7 @@ class _ResourcesListState extends State<ResourcesList> {
               color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(8),
             ),
-            padding: EdgeInsets.all(11),
+            padding: const EdgeInsets.all(11),
             child: SvgPicture.asset('assets/icons/link_icon.svg'),
           ),
           title: Text(

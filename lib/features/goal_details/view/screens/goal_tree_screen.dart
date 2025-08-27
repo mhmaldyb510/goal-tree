@@ -29,8 +29,8 @@ class _GoalTreeViewScreenState extends State<GoalTreeViewScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              if (provider.selectedNode != null) SelectNodeOptions(),
-              TreeWidgetBuilder(),
+              if (provider.selectedNode != null) const SelectNodeOptions(),
+              const TreeWidgetBuilder(),
             ],
           ),
         ),

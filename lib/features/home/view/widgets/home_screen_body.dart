@@ -28,7 +28,7 @@ class HomeScreenBody extends StatelessWidget {
         }
       },
       child: CustomScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
