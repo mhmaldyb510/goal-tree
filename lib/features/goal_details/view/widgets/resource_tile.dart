@@ -15,18 +15,19 @@ class ResourceTile extends StatelessWidget {
     return ListTile(
       onTap: () async {
         if (resource.link.isEmpty) return;
-        if (!resource.link.toLowerCase().startsWith('https://') &&
-            !resource.link.toLowerCase().startsWith('http://')) {
-          resource.link = 'https://${resource.link}';
+        String url = resource.link;
+        if (!url.toLowerCase().startsWith('https://') &&
+            !url.toLowerCase().startsWith('http://')) {
+          url = 'https://$url';
         }
         try {
-          await launchUrl(Uri.parse(resource.link));
+          await launchUrl(Uri.parse(url));
         } on Exception catch (e) {
           debugPrint(e.toString());
           if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('cannot launch ${resource.link}').tr()),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('cannot launch $url').tr()));
           }
         }
       },
