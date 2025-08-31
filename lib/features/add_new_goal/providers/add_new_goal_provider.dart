@@ -89,8 +89,8 @@ class AddNewGoalProvider extends ChangeNotifier {
         );
       }
     } finally {
+      isCreatingGoal = false;
       if (context.mounted) {
-        isCreatingGoal = false;
         notifyListeners();
       }
     }
