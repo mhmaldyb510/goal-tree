@@ -23,6 +23,7 @@ class AddNewGoalProvider extends ChangeNotifier {
 
   void addResource(ResourceModel resource) {
     _goalResources.add(resource);
+    addingResource = false;
     notifyListeners();
   }
 
@@ -90,7 +91,7 @@ class AddNewGoalProvider extends ChangeNotifier {
       }
     } finally {
       if (context.mounted) {
-      isCreatingGoal = false;
+        isCreatingGoal = false;
         notifyListeners();
       }
     }
