@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goal_tree/core/theme/app_text_styles.dart';
-import 'package:goal_tree/features/add_new_goal/providers/goal_resources_provider.dart';
+import 'package:goal_tree/features/add_new_goal/providers/add_new_goal_provider.dart';
 
 class ResourcesList extends StatefulWidget {
   const ResourcesList({super.key});
@@ -14,7 +14,7 @@ class ResourcesList extends StatefulWidget {
 class _ResourcesListState extends State<ResourcesList> {
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<GoalResourcesProvider>();
+    final provider = context.watch<AddNewGoalProvider>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(
