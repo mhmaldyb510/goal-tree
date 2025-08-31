@@ -66,6 +66,7 @@ class AddNewGoalProvider extends ChangeNotifier {
     }
 
     isCreatingGoal = true;
+    notifyListeners();
 
     try {
       await context.read<HomeCubit>().addGoal(
@@ -90,6 +91,7 @@ class AddNewGoalProvider extends ChangeNotifier {
     } finally {
       if (context.mounted) {
         isCreatingGoal = false;
+        notifyListeners();
       }
     }
   }
