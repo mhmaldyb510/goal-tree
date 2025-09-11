@@ -23,12 +23,15 @@ class TreeWidgetBuilder extends StatelessWidget {
                   TreeEdgeRenderer(provider.builder),
                 ),
                 builder: (node) {
-                  int nodeId = node.key?.value ?? 0;
+                  final nodeId = node.key?.value as int?;
                   return GoalBox(
-                    text: provider.nodeNames[nodeId] ?? node.key?.value ?? '',
+                    text:
+                        (nodeId != null ? provider.nodeNames[nodeId] : null) ??
+                        'Unknown Node',
                     isSelected: provider.selectedNode?.key == node.key,
                     onTap: () => provider.clickNode(node),
-                    isDone: provider.doneNodes.contains(nodeId),
+                    isDone:
+                        nodeId != null && provider.doneNodes.contains(nodeId),
                   );
                 },
               ),

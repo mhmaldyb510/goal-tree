@@ -88,27 +88,36 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void addToDone(Node node) async {
-    int nodeId = node.key?.value ?? 0;
-    doneNodes.add(nodeId);
-    NodeModel? nodeModel = await _goalsStorageHelper.getNodeById(nodeId);
-    if (nodeModel != null) {
-      nodeModel.isDone = !nodeModel.isDone;
-      await _goalsStorageHelper.updateNode(nodeModel);
-      goal = (await _goalsStorageHelper.getGoalById(goal.id)) ?? goal;
-      clearTheGraph();
-      createGraph();
+    final nodeId = node.key?.value as int?;
+    if (nodeId == null) {
+      // It's safest to do nothing if we don't have a valid ID.
+      return;
+    }
+
+    if (nodeId == goal.id) {
+      // This is the root goal.
+      goal.isDone = !goal.isDone;
+      await _goalsStorageHelper.updateGoal(goal);
     } else {
-      GoalModel? goalModel = await _goalsStorageHelper.getGoalById(goal.id);
-      if (goalModel != null) {
-        goalModel.isDone = !goalModel.isDone;
-        await _goalsStorageHelper.updateGoal(goalModel);
-        goal = (await _goalsStorageHelper.getGoalById(goal.id)) ?? goal;
-        clearTheGraph();
-        createGraph();
+      // This is a child node.
+      final nodeModel = await _goalsStorageHelper.getNodeById(nodeId);
+      if (nodeModel != null) {
+        nodeModel.isDone = !nodeModel.isDone;
+        await _goalsStorageHelper.updateNode(nodeModel);
+      } else {
+        // Node not found in storage, cannot update. Log or handle error.
+        return;
       }
     }
 
-    notifyListeners();
+    // Reload the entire goal from storage to ensure UI is consistent with DB.
+    final updatedGoal = await _goalsStorageHelper.getGoalById(goal.id);
+    if (updatedGoal != null) {
+      goal = updatedGoal;
+      clearTheGraph();
+      createGraph();
+      notifyListeners();
+    }
   }
 
   void clearTheGraph() {
