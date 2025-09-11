@@ -1,10 +1,14 @@
 import 'package:goal_tree/core/models/goal_model.dart';
+import 'package:goal_tree/core/models/node_model.dart';
 import 'package:goal_tree/objectbox.g.dart';
 
 class GoalsStorageHelper {
   final Box<GoalModel> _goalBox;
+  final Box<NodeModel> _nodeBox;
 
-  GoalsStorageHelper(Store store) : _goalBox = store.box<GoalModel>();
+  GoalsStorageHelper(Store store)
+      : _goalBox = store.box<GoalModel>(),
+        _nodeBox = store.box<NodeModel>();
 
   Future<int> addGoal(GoalModel goal) => _goalBox.putAsync(goal);
 
@@ -17,4 +21,9 @@ class GoalsStorageHelper {
   }
 
   Future<GoalModel?> getGoalById(int id) => _goalBox.getAsync(id);
+
+  Future<NodeModel?> getNodeById(int nodeId) => _nodeBox.getAsync(nodeId); 
+
+  Future<int> updateNode(NodeModel node) => _nodeBox.putAsync(node);
+  
 }

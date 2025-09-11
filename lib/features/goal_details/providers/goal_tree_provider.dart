@@ -21,7 +21,7 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   GoalModel goal;
 
-  List<Node> doneNodes = [];
+  List<int> doneNodes = [];
   Graph graph = Graph()..isTree = true;
   BuchheimWalkerConfiguration builder = BuchheimWalkerConfiguration();
   Node? selectedNode;
@@ -37,6 +37,7 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void createGraph() {
+    if (goal.isDone) doneNodes.add(goal.id);
     graph.addNode(Node.Id(goal.id));
     nodeNames[goal.id] = goal.title;
     for (var node in goal.nodes) {
@@ -48,6 +49,7 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   void createNodes(int parentId, NodeModel nodeModel) {
     graph.addNode(Node.Id(nodeModel.id));
     nodeNames[nodeModel.id] = nodeModel.name;
+    if (nodeModel.isDone) doneNodes.add(nodeModel.id);
     graph.addEdge(Node.Id(parentId), Node.Id(nodeModel.id));
     for (var child in nodeModel.children) {
       createNodes(nodeModel.id, child);
@@ -85,8 +87,27 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     createGraph();
   }
 
-  void addToDone(Node node) {
-    doneNodes.add(node);
+  void addToDone(Node node) async {
+    int nodeId = node.key?.value ?? 0;
+    doneNodes.add(nodeId);
+    NodeModel? nodeModel = await _goalsStorageHelper.getNodeById(nodeId);
+    if (nodeModel != null) {
+      nodeModel.isDone = !nodeModel.isDone;
+      await _goalsStorageHelper.updateNode(nodeModel);
+      goal = (await _goalsStorageHelper.getGoalById(goal.id)) ?? goal;
+      clearTheGraph();
+      createGraph();
+    } else {
+      GoalModel? goalModel = await _goalsStorageHelper.getGoalById(goal.id);
+      if (goalModel != null) {
+        goalModel.isDone = !goalModel.isDone;
+        await _goalsStorageHelper.updateGoal(goalModel);
+        goal = (await _goalsStorageHelper.getGoalById(goal.id)) ?? goal;
+        clearTheGraph();
+        createGraph();
+      }
+    }
+
     notifyListeners();
   }
 

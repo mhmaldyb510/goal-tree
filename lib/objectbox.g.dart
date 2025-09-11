@@ -24,7 +24,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(1, 5093180647650046119),
     name: 'GoalModel',
-    lastPropertyId: const obx_int.IdUid(8, 2177050151561794612),
+    lastPropertyId: const obx_int.IdUid(9, 20106676543693935),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -73,6 +73,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(8, 2177050151561794612),
         name: 'priority',
         type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 20106676543693935),
+        name: 'isDone',
+        type: 1,
         flags: 0,
       ),
     ],
@@ -230,7 +236,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final titleOffset = fbb.writeString(object.title);
         final descriptionOffset = fbb.writeString(object.description);
         final notesOffset = fbb.writeString(object.notes);
-        fbb.startTable(9);
+        fbb.startTable(10);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, goalIdOffset);
         fbb.addOffset(2, titleOffset);
@@ -239,6 +245,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(5, object.deadline?.millisecondsSinceEpoch);
         fbb.addOffset(6, notesOffset);
         fbb.addInt64(7, object.priority);
+        fbb.addBool(8, object.isDone);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -277,6 +284,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           18,
           0,
         );
+        final isDoneParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          20,
+          false,
+        );
         final object = GoalModel(
           goalId: goalIdParam,
           title: titleParam,
@@ -285,6 +298,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           deadline: deadlineParam,
           notes: notesParam,
           priority: priorityParam,
+          isDone: isDoneParam,
         )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
         obx_int.InternalToManyAccess.setRelInfo<GoalModel>(
           object.resources,
@@ -426,6 +440,11 @@ class GoalModel_ {
   /// See [GoalModel.priority].
   static final priority = obx.QueryIntegerProperty<GoalModel>(
     _entities[0].properties[7],
+  );
+
+  /// See [GoalModel.isDone].
+  static final isDone = obx.QueryBooleanProperty<GoalModel>(
+    _entities[0].properties[8],
   );
 
   /// see [GoalModel.resources]

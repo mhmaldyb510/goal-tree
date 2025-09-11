@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:goal_tree/features/goal_details/providers/goal_tree_provider.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/create_new_node_form.dart';
@@ -9,18 +11,18 @@ class SelectNodeOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GoalTreeProvider>(context);
+    int? nodeId = provider.selectedNode?.key?.value ?? 0;
+    if (provider.doneNodes.contains(nodeId)) log('done');
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
-          provider.nodeNames[provider.selectedNode!.key!.value] ??
-              provider.selectedNode!.key!.value,
+          provider.nodeNames[nodeId] ?? nodeId.toString(),
           style: const TextStyle(fontSize: 20),
         ),
         const SizedBox(width: 8),
         SelectNodeButton(
           onPressed: () async {
-            
             await createNewNodeForm(context);
           },
           icon: Icons.add,
@@ -28,7 +30,9 @@ class SelectNodeOptions extends StatelessWidget {
         const SizedBox(width: 8),
         SelectNodeButton(
           onPressed: () => provider.addToDone(provider.selectedNode!),
-          icon: Icons.remove,
+          icon: provider.doneNodes.contains(nodeId)
+              ? Icons.remove_done
+              : Icons.done_all,
         ),
       ],
     );

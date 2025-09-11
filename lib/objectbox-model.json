@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:5093180647650046119",
-      "lastPropertyId": "8:2177050151561794612",
+      "lastPropertyId": "9:20106676543693935",
       "name": "GoalModel",
       "properties": [
         {
@@ -48,6 +48,11 @@
           "id": "8:2177050151561794612",
           "name": "priority",
           "type": 6
+        },
+        {
+          "id": "9:20106676543693935",
+          "name": "isDone",
+          "type": 1
         }
       ],
       "relations": [
