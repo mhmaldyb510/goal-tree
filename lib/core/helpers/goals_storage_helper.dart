@@ -7,8 +7,8 @@ class GoalsStorageHelper {
   final Box<NodeModel> _nodeBox;
 
   GoalsStorageHelper(Store store)
-    : _goalBox = store.box<GoalModel>(),
-      _nodeBox = store.box<NodeModel>();
+      : _goalBox = store.box<GoalModel>(),
+        _nodeBox = store.box<NodeModel>();
 
   Future<int> addGoal(GoalModel goal) => _goalBox.putAsync(goal);
 
@@ -22,7 +22,8 @@ class GoalsStorageHelper {
 
   Future<GoalModel?> getGoalById(int id) => _goalBox.getAsync(id);
 
-  Future<NodeModel?> getNodeById(int nodeId) => _nodeBox.getAsync(nodeId);
+  Future<NodeModel?> getNodeById(int nodeId) => _nodeBox.getAsync(nodeId); 
 
   Future<int> addNode(NodeModel node) => _nodeBox.putAsync(node);
+  
 }

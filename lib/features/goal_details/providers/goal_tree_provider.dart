@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:goal_tree/core/helpers/goals_storage_helper.dart';
 import 'package:goal_tree/core/models/goal_model.dart';
@@ -7,11 +9,9 @@ import 'package:graphview/GraphView.dart';
 
 class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   GoalTreeState state = GoalTreeState.initial;
-  GoalTreeState state = GoalTreeState.initial;
 
   GoalModel goal;
 
-  List<int> doneNodes = [];
   List<int> doneNodes = [];
   Graph graph = Graph()..isTree = true;
   BuchheimWalkerConfiguration builder = BuchheimWalkerConfiguration();
@@ -22,7 +22,6 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   final Map<int, String> nodeNames = {};
 
-  GoalTreeProvider({required this.goal});
   GoalTreeProvider({required this.goal});
 
   void createGraph() {
