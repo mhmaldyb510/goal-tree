@@ -87,7 +87,7 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     createGraph();
   }
 
-  void addToDone(Node node) async {
+  void changeDoneState(Node node) async {
     final nodeId = node.key?.value as int?;
     if (nodeId == null) {
       // It's safest to do nothing if we don't have a valid ID.
