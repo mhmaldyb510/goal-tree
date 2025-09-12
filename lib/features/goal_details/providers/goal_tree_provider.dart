@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:goal_tree/core/helpers/goals_storage_helper.dart';
 import 'package:goal_tree/core/models/goal_model.dart';
@@ -58,16 +60,16 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   Future<void> createNewNode(Node parent, String name) async {
     state = GoalTreeState.building;
     notifyListeners();
-    try {
-      final parentId = parent.key?.value;
-      if (parentId == null) {
-        state = GoalTreeState.built;
-        notifyListeners();
-        return;
-      }
-      final newNode = NodeModel(name: name);
-      createNodes(parentId, newNode);
+    final parentId = parent.key?.value;
+    if (parentId == null) {
+      state = GoalTreeState.built;
       notifyListeners();
+      return;
+    }
+    final newNode = NodeModel(name: name);
+    createNodes(parentId, newNode);
+    notifyListeners();
+    try {
       await _goalsStorageHelper.addNode(newNode);
       if (parentId == goal.id) {
         goal.nodes.add(newNode);
@@ -83,6 +85,13 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
       if (updatedGoal != null) {
         goal = updatedGoal;
       }
+    } catch (e) {
+      // Revert UI on error
+      graph.removeNode(Node.Id(newNode.id));
+      nodeNames.remove(newNode.id);
+      if (kDebugMode) {
+        log('Error adding node: $e');
+      }
     } finally {
       state = GoalTreeState.built;
       notifyListeners();
@@ -92,28 +101,47 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   void changeDoneState(Node node) async {
     state = GoalTreeState.building;
     notifyListeners();
-    try {
-      final nodeId = node.key?.value as int?;
-      if (nodeId == null) return;
-      if (doneNodes.contains(nodeId)) {
-        doneNodes.remove(nodeId);
-      } else {
-        doneNodes.add(nodeId);
-      }
+
+    final nodeId = node.key?.value as int?;
+    if (nodeId == null) {
+      state = GoalTreeState.built;
       notifyListeners();
+      return;
+    }
+
+    final wasDone = doneNodes.contains(nodeId);
+    if (wasDone) {
+      doneNodes.remove(nodeId);
+    } else {
+      doneNodes.add(nodeId);
+    }
+    notifyListeners();
+
+    try {
       if (nodeId == goal.id) {
-        goal.isDone = !goal.isDone;
+        goal.isDone = !wasDone;
         await _goalsStorageHelper.updateGoal(goal);
       } else {
         final nodeModel = await _goalsStorageHelper.getNodeById(nodeId);
-        if (nodeModel == null) return;
-        nodeModel.isDone = !nodeModel.isDone;
+        if (nodeModel == null) throw Exception('Node not found');
+        nodeModel.isDone = !wasDone;
         await _goalsStorageHelper.addNode(nodeModel);
       }
 
       final updatedGoal = await _goalsStorageHelper.getGoalById(goal.id);
-      if (updatedGoal == null) return;
+      if (updatedGoal == null) throw Exception('Goal not found after update');
       goal = updatedGoal;
+    } catch (e) {
+      // Revert UI on error
+      if (wasDone) {
+        doneNodes.add(nodeId);
+      } else {
+        doneNodes.remove(nodeId);
+      }
+      // if in debug mode
+      if (kDebugMode) {
+        log(e.toString());
+      }
     } finally {
       state = GoalTreeState.built;
       notifyListeners();
