@@ -9,26 +9,31 @@ class SelectNodeOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GoalTreeProvider>(context);
+    final selectedNode = provider.selectedNode;
+    final nodeId = selectedNode?.key?.value;
+    if (nodeId is! int || selectedNode == null) {
+      return const SizedBox.shrink();
+    }
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
-          provider.nodeNames[provider.selectedNode!.key!.value] ??
-              provider.selectedNode!.key!.value,
+          provider.nodeNames[nodeId] ?? nodeId.toString(),
           style: const TextStyle(fontSize: 20),
         ),
         const SizedBox(width: 8),
         SelectNodeButton(
           onPressed: () async {
-            
             await createNewNodeForm(context);
           },
           icon: Icons.add,
         ),
         const SizedBox(width: 8),
         SelectNodeButton(
-          onPressed: () => provider.addToDone(provider.selectedNode!),
-          icon: Icons.remove,
+          onPressed: () => provider.changeDoneState(selectedNode),
+          icon: provider.doneNodes.contains(nodeId)
+              ? Icons.remove_done
+              : Icons.done_all,
         ),
       ],
     );

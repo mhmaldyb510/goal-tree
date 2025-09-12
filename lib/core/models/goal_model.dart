@@ -19,6 +19,7 @@ class GoalModel {
 
   final resources = ToMany<ResourceModel>();
   final nodes = ToMany<NodeModel>();
+  bool isDone;
 
   GoalModel({
     this.goalId = '',
@@ -30,6 +31,7 @@ class GoalModel {
     this.priority = 0,
     List<ResourceModel>? initialResources,
     List<NodeModel>? initialNodes,
+    this.isDone = false,
   }) {
     if (initialResources != null) {
       resources.addAll(initialResources);

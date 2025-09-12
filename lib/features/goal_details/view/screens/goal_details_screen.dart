@@ -10,6 +10,7 @@ import 'package:goal_tree/features/goal_details/view/widgets/goal_title.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/goal_tree_placeholder.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/information_table_builder.dart';
 import 'package:goal_tree/features/goal_details/view/widgets/resources_list.dart';
+import 'package:goal_tree/features/home/cubit/home_cubit.dart';
 import 'package:provider/provider.dart';
 
 class GoalDetailsScreen extends StatelessWidget {
@@ -26,10 +27,8 @@ class GoalDetailsScreen extends StatelessWidget {
           final provider = Provider.of<GoalTreeProvider>(context);
           final goal = provider.goal;
           return PopScope(
-            canPop: false,
-            onPopInvokedWithResult: (didPop, _) {
-              if (didPop) return;
-              Navigator.pop(context, goal);
+            onPopInvokedWithResult: (_, _) {
+              context.read<HomeCubit>().getGoals();
             },
             child: Scaffold(
               appBar: PreferredSize(
