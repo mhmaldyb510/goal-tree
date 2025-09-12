@@ -89,6 +89,7 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
       // Revert UI on error
       graph.removeNode(Node.Id(newNode.id));
       nodeNames.remove(newNode.id);
+      goal.nodes.remove(newNode);
       if (kDebugMode) {
         log('Error adding node: $e');
       }
@@ -137,6 +138,9 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
         doneNodes.add(nodeId);
       } else {
         doneNodes.remove(nodeId);
+      }
+      if (nodeId == goal.id) {
+        goal.isDone = wasDone;
       }
       // if in debug mode
       if (kDebugMode) {
