@@ -58,56 +58,66 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   Future<void> createNewNode(Node parent, String name) async {
     state = GoalTreeState.building;
     notifyListeners();
-    final parentId = parent.key?.value;
-    if (parentId == null) {
+    try {
+      final parentId = parent.key?.value;
+      if (parentId == null) {
+        state = GoalTreeState.built;
+        notifyListeners();
+        return;
+      }
+      final newNode = NodeModel(name: name);
+      createNodes(parentId, newNode);
+      notifyListeners();
+      await _goalsStorageHelper.addNode(newNode);
+      if (parentId == goal.id) {
+        goal.nodes.add(newNode);
+        await _goalsStorageHelper.updateGoal(goal);
+      } else {
+        final parentNode = await _goalsStorageHelper.getNodeById(parentId);
+        if (parentNode != null) {
+          parentNode.children.add(newNode);
+          await _goalsStorageHelper.addNode(parentNode);
+        }
+      }
+      final updatedGoal = await _goalsStorageHelper.getGoalById(goal.id);
+      if (updatedGoal != null) {
+        goal = updatedGoal;
+      }
+    } finally {
       state = GoalTreeState.built;
       notifyListeners();
-      return;
     }
-    final newNode = NodeModel(name: name);
-    createNodes(parentId, newNode);
-    notifyListeners();
-    await _goalsStorageHelper.addNode(newNode);
-    if (parentId == goal.id) {
-      goal.nodes.add(newNode);
-      await _goalsStorageHelper.updateGoal(goal);
-    } else {
-      final parentNode = await _goalsStorageHelper.getNodeById(parentId);
-      if (parentNode != null) {
-        parentNode.children.add(newNode);
-        await _goalsStorageHelper.addNode(parentNode);
-      }
-    }
-    state = GoalTreeState.built;
-    notifyListeners();
   }
 
   void changeDoneState(Node node) async {
     state = GoalTreeState.building;
     notifyListeners();
-    final nodeId = node.key?.value as int?;
-    if (nodeId == null) return;
-    if (doneNodes.contains(nodeId)) {
-      doneNodes.remove(nodeId);
-    } else {
-      doneNodes.add(nodeId);
-    }
-    notifyListeners();
-    if (nodeId == goal.id) {
-      goal.isDone = !goal.isDone;
-      await _goalsStorageHelper.updateGoal(goal);
-    } else {
-      final nodeModel = await _goalsStorageHelper.getNodeById(nodeId);
-      if (nodeModel == null) return;
-      nodeModel.isDone = !nodeModel.isDone;
-      await _goalsStorageHelper.addNode(nodeModel);
-    }
+    try {
+      final nodeId = node.key?.value as int?;
+      if (nodeId == null) return;
+      if (doneNodes.contains(nodeId)) {
+        doneNodes.remove(nodeId);
+      } else {
+        doneNodes.add(nodeId);
+      }
+      notifyListeners();
+      if (nodeId == goal.id) {
+        goal.isDone = !goal.isDone;
+        await _goalsStorageHelper.updateGoal(goal);
+      } else {
+        final nodeModel = await _goalsStorageHelper.getNodeById(nodeId);
+        if (nodeModel == null) return;
+        nodeModel.isDone = !nodeModel.isDone;
+        await _goalsStorageHelper.addNode(nodeModel);
+      }
 
-    final updatedGoal = await _goalsStorageHelper.getGoalById(goal.id);
-    if (updatedGoal == null) return;
-    goal = updatedGoal;
-    state = GoalTreeState.built;
-    notifyListeners();
+      final updatedGoal = await _goalsStorageHelper.getGoalById(goal.id);
+      if (updatedGoal == null) return;
+      goal = updatedGoal;
+    } finally {
+      state = GoalTreeState.built;
+      notifyListeners();
+    }
   }
 }
 
