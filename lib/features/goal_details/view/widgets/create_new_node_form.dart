@@ -14,10 +14,9 @@ Future<dynamic> createNewNodeForm(BuildContext context) {
       ),
       actions: [
         TextButton(
-          onPressed: () async {
+          onPressed: () {
             if (newNodeName.isEmpty) return;
-            await provider.createNewNode(provider.selectedNode!, newNodeName);
-
+            provider.createNewNode(provider.selectedNode!, newNodeName);
             if (context.mounted) {
               Navigator.pop(context);
             }

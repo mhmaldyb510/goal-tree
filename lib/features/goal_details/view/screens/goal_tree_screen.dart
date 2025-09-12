@@ -24,7 +24,7 @@ class _GoalTreeViewScreenState extends State<GoalTreeViewScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<GoalTreeProvider>(context);
     return PopScope(
-      onPopInvokedWithResult: (_, _) => provider.clearTheGraph(),
+      canPop: provider.state != GoalTreeState.building,
       child: Scaffold(
         body: SafeArea(
           child: Column(

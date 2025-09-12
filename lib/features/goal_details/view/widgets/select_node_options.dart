@@ -10,10 +10,10 @@ class SelectNodeOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<GoalTreeProvider>(context);
     final selectedNode = provider.selectedNode;
-    if (selectedNode == null) {
+    final nodeId = selectedNode?.key?.value;
+    if (nodeId is! int || selectedNode == null) {
       return const SizedBox.shrink();
     }
-    final nodeId = selectedNode.key!.value as int;
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [

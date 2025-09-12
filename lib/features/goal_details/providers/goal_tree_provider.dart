@@ -1,23 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:goal_tree/core/helpers/goals_storage_helper.dart';
 import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/core/models/node_model.dart';
-import 'package:goal_tree/features/goal_details/helpers/goal_model_to_json.dart';
 import 'package:goal_tree/main.dart';
 import 'package:graphview/GraphView.dart';
 
 class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
-  // Recursively find a node by id in the tree
-  NodeModel? _findNodeById(int id, Iterable<NodeModel> nodes) {
-    for (var node in nodes) {
-      if (node.id == id) return node;
-      final found = _findNodeById(id, node.children);
-      if (found != null) return found;
-    }
-    return null;
-  }
+  GoalTreeState state = GoalTreeState.initial;
 
   GoalModel goal;
 
@@ -29,20 +18,21 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     objectBox.store,
   );
 
-  // Map node id to display name
   final Map<int, String> nodeNames = {};
 
-  GoalTreeProvider({required this.goal}) {
-    // Initialize graph with root node to avoid empty graph errors
-  }
+  GoalTreeProvider({required this.goal});
 
   void createGraph() {
+    if (state == GoalTreeState.built) return;
+    state = GoalTreeState.building;
+    notifyListeners();
     if (goal.isDone) doneNodes.add(goal.id);
     graph.addNode(Node.Id(goal.id));
     nodeNames[goal.id] = goal.title;
     for (var node in goal.nodes) {
       createNodes(goal.id, node);
     }
+    state = GoalTreeState.built;
     notifyListeners();
   }
 
@@ -66,63 +56,59 @@ class GoalTreeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<void> createNewNode(Node parent, String name) async {
+    state = GoalTreeState.building;
+    notifyListeners();
     final parentId = parent.key?.value;
-    if (parentId == null) return;
+    if (parentId == null) {
+      state = GoalTreeState.built;
+      notifyListeners();
+      return;
+    }
     final newNode = NodeModel(name: name);
-    await objectBox.store.box<NodeModel>().putAsync(newNode);
-
+    createNodes(parentId, newNode);
+    notifyListeners();
+    await _goalsStorageHelper.addNode(newNode);
     if (parentId == goal.id) {
       goal.nodes.add(newNode);
+      await _goalsStorageHelper.updateGoal(goal);
     } else {
-      NodeModel? parentNode = _findNodeById(parentId, goal.nodes);
+      final parentNode = await _goalsStorageHelper.getNodeById(parentId);
       if (parentNode != null) {
         parentNode.children.add(newNode);
-        await objectBox.store.box<NodeModel>().putAsync(parentNode);
+        await _goalsStorageHelper.addNode(parentNode);
       }
     }
-    log(goalModelToJson(goal).replaceAll(',', '\n'));
-    await _goalsStorageHelper.updateGoal(goal);
-    goal = (await _goalsStorageHelper.getGoalById(goal.id)) ?? goal;
-    clearTheGraph();
-    createGraph();
+    state = GoalTreeState.built;
+    notifyListeners();
   }
 
   void changeDoneState(Node node) async {
+    state = GoalTreeState.building;
+    notifyListeners();
     final nodeId = node.key?.value as int?;
-    if (nodeId == null) {
-      // It's safest to do nothing if we don't have a valid ID.
-      return;
+    if (nodeId == null) return;
+    if (doneNodes.contains(nodeId)) {
+      doneNodes.remove(nodeId);
+    } else {
+      doneNodes.add(nodeId);
     }
-
+    notifyListeners();
     if (nodeId == goal.id) {
-      // This is the root goal.
       goal.isDone = !goal.isDone;
       await _goalsStorageHelper.updateGoal(goal);
     } else {
-      // This is a child node.
       final nodeModel = await _goalsStorageHelper.getNodeById(nodeId);
-      if (nodeModel != null) {
-        nodeModel.isDone = !nodeModel.isDone;
-        await _goalsStorageHelper.updateNode(nodeModel);
-      } else {
-        // Node not found in storage, cannot update. Log or handle error.
-        return;
-      }
+      if (nodeModel == null) return;
+      nodeModel.isDone = !nodeModel.isDone;
+      await _goalsStorageHelper.addNode(nodeModel);
     }
 
-    // Reload the entire goal from storage to ensure UI is consistent with DB.
     final updatedGoal = await _goalsStorageHelper.getGoalById(goal.id);
-    if (updatedGoal != null) {
-      goal = updatedGoal;
-      clearTheGraph();
-      createGraph();
-      notifyListeners();
-    }
-  }
-
-  void clearTheGraph() {
-    graph.edges.clear();
-    graph.nodes.clear();
-    doneNodes.clear();
+    if (updatedGoal == null) return;
+    goal = updatedGoal;
+    state = GoalTreeState.built;
+    notifyListeners();
   }
 }
+
+enum GoalTreeState { initial, building, built }

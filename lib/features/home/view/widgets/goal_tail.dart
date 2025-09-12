@@ -3,26 +3,15 @@ import 'package:goal_tree/core/models/goal_model.dart';
 import 'package:goal_tree/features/goal_details/view/screens/goal_details_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GoalTile extends StatefulWidget {
+class GoalTile extends StatelessWidget {
   final GoalModel goal;
   const GoalTile({super.key, required this.goal});
 
   @override
-  State<GoalTile> createState() => _GoalTileState();
-}
-
-class _GoalTileState extends State<GoalTile> {
-  late GoalModel goal;
-  @override
-  void initState() {
-    goal = widget.goal;
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () async{
-       goal = await Navigator.push(
+      onTap: () {
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => GoalDetailsScreen(goal: goal),
